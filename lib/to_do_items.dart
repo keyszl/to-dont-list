@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class Item {
   const Item({required this.name});
 
@@ -33,7 +34,7 @@ class ToDoListItem extends StatelessWidget {
     // taking place and therefore which theme to use.
 
     return completed //
-        ? Colors.black
+        ? Colors.black54
         : Theme.of(context).primaryColor;
   }
 
@@ -59,10 +60,10 @@ class ToDoListItem extends StatelessWidget {
           : null,
       leading: CircleAvatar(
         backgroundColor: _getColor(context),
-        child: Text(item.name),
+        child: Text(item.abbrev()),
       ),
       title: Text(
-        item.abbrev(),
+        item.name,
         style: _getTextStyle(context),
       ),
     );
