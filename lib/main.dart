@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:to_dont_list/to_do_items.dart';
 
+import 'assets/icon.dart';
+
 class ToDoList extends StatefulWidget {
   const ToDoList({super.key});
 
@@ -132,7 +134,7 @@ class _ToDoListState extends State<ToDoList> {
           }).toList(),
         ),
         floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.add),
+            child: const Icon(MyFlutterApp.cat), //imports my new icon 
             onPressed: () {
               _displayTextInputDialog(context);
             }));
