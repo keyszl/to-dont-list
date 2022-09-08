@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_dont_list/assets/icon.dart';
 
 
 class Item {
@@ -60,7 +61,7 @@ class ToDoListItem extends StatelessWidget {
           : null,
       leading: CircleAvatar(
         backgroundColor: _getColor(context),
-        child: Text(item.abbrev()),
+        child: const Icon(MyFlutterApp.cat),
       ),
       title: Text(
         item.name,

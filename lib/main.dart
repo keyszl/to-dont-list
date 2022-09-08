@@ -1,5 +1,7 @@
+// cool thought s you have about your pet cat that you want to record into an app 
 // Started with https://docs.flutter.dev/development/ui/widgets-intro
 import 'package:flutter/material.dart';
+import 'package:to_dont_list/assets/thoughticon.dart';
 import 'package:to_dont_list/to_do_items.dart';
 
 import 'assets/icon.dart';
@@ -25,7 +27,7 @@ class _ToDoListState extends State<ToDoList> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text('Item To Add'),
+            title: const Text('Thought To Add'),
             content: TextField(
               onChanged: (value) {
                 setState(() {
@@ -34,13 +36,13 @@ class _ToDoListState extends State<ToDoList> {
               },
               controller: _inputController,
               decoration:
-                  const InputDecoration(hintText: "type something here"),
+                  const InputDecoration(hintText: "type it out here"),
             ),
             actions: <Widget>[
               ElevatedButton(
                 key: const Key("OKButton"),
                 style: yesStyle,
-                child: const Text('OK'),
+                child: const Text('Meow'),
                 onPressed: () {
                   setState(() {
                     _handleNewItem(valueText);
@@ -120,7 +122,7 @@ class _ToDoListState extends State<ToDoList> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('To Do List'),
+          title: const Text('Thoughts about your pet cat'),
         ),
         body: ListView(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -134,7 +136,7 @@ class _ToDoListState extends State<ToDoList> {
           }).toList(),
         ),
         floatingActionButton: FloatingActionButton(
-            child: const Icon(MyFlutterApp.cat), //imports my new icon 
+            child: const Icon(FlutterThought.thought),                      //imports my new icon 
             onPressed: () {
               _displayTextInputDialog(context);
             }));
@@ -143,7 +145,7 @@ class _ToDoListState extends State<ToDoList> {
 
 void main() {
   runApp(const MaterialApp(
-    title: 'To Do List',
+    title: 'Thoughts about Pet recorder',
     home: ToDoList(),
   ));
 }
