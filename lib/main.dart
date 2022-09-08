@@ -94,10 +94,9 @@ class _ToDoListState extends State<ToDoList> {
         items.insert(0, item);
       }
 
-      items.sort((a, b) {
-        //sorting in ascending order
+      /*items.sort((a, b) { // this sorts the items list
         return a.name.compareTo(b.name);
-      });
+      });*/
     });
   }
 
@@ -113,6 +112,12 @@ class _ToDoListState extends State<ToDoList> {
       print("Adding new item");
       Item item = Item(name: itemText);
       items.insert(0, item);
+
+      items.sort((a, b) {
+        // this sorts the items list
+        return a.name.compareTo(b.name);
+      });
+
       _inputController.clear();
     });
   }
