@@ -16,11 +16,25 @@ class ToDoList extends StatefulWidget {
 
 class _ToDoListState extends State<ToDoList> {
   // Dialog with text from https://www.appsdeveloperblog.com/alert-dialog-with-a-text-field-in-flutter/
+  int _counter = 0;
+
   final TextEditingController _inputController = TextEditingController();
   final ButtonStyle yesStyle = ElevatedButton.styleFrom(
       textStyle: const TextStyle(fontSize: 20), primary: Colors.green);
   final ButtonStyle noStyle = ElevatedButton.styleFrom(
       textStyle: const TextStyle(fontSize: 20), primary: Colors.red);
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  void _decrementCounter() {
+    setState(() {
+      _counter--;
+    });
+  }
 
   Future<void> _displayTextInputDialog(BuildContext context) async {
     print("Loading Dialog");
@@ -30,6 +44,8 @@ class _ToDoListState extends State<ToDoList> {
           return AlertDialog(
             title: const Text('Thought To Add'),
             content: TextField(
+              maxLines:
+                  4, // https://www.fluttercampus.com/guide/176/how-to-make-multi-line-textfield-input-textarea-in-flutter/#:~:text=How%20to%20Make%20Multi-line%20TextField%20in%20Flutter%3A%20TextField%28keyboardType%3A,line%20that%20looks%20exactly%20like%20textarea%20in%20HTML.
               onChanged: (value) {
                 setState(() {
                   valueText = value;
@@ -47,6 +63,26 @@ class _ToDoListState extends State<ToDoList> {
                   setState(() {
                     _handleNewItem(valueText);
                     Navigator.pop(context);
+                  });
+                },
+              ),
+              ElevatedButton(
+                key: const Key("Pointsgood"),
+                style: yesStyle,
+                child: const Text('Good'),
+                onPressed: () {
+                  setState(() {
+                    _incrementCounter();
+                  });
+                },
+              ),
+              ElevatedButton(
+                key: const Key("Pointsbad"),
+                style: yesStyle,
+                child: const Text('Bad'),
+                onPressed: () {
+                  setState(() {
+                    _decrementCounter();
                   });
                 },
               ),
@@ -124,10 +160,21 @@ class _ToDoListState extends State<ToDoList> {
       appBar: AppBar(
         title: const Text('Thoughts about your pet cat'),
       ),
+
+      //Found how to add all the buttons here: https://www.fluttercampus.com/guide/19/how-to-add-multiple-floating-action-buttons-in-one-screen-flutter-app/#:~:text=How%20to%20Add%20Multiple%20Floating%20Action%20Buttons%20in,%28%29%20widget%20to%20add%20multiple%20floating%20action%20buttons.
       floatingActionButton: Wrap(
         //will break to another line on overflow
-        direction: Axis.horizontal, //use vertical to show  on vertical axis
+        direction: Axis.vertical, //use vertical to show  on vertical axis
         children: <Widget>[
+          Container(
+            child: const Text(
+              "Number of good days with cat",
+            ),
+          ),
+          Container(
+              child: Text(
+            '$_counter',
+          )),
           Container(
               margin: EdgeInsets.all(10),
               child: FloatingActionButton(
@@ -141,21 +188,16 @@ class _ToDoListState extends State<ToDoList> {
           Container(
               margin: EdgeInsets.all(10),
               child: FloatingActionButton(
-                onPressed: () {
-                  //action code for button 2
-                },
-                backgroundColor: Colors.deepPurpleAccent,
-                child: Icon(Icons.add),
-              )), // button second
+                  onPressed: _incrementCounter,
+                  backgroundColor: Colors.deepPurpleAccent,
+                  child: Icon(Icons.exposure_plus_1))), // button second
 
           Container(
               margin: EdgeInsets.all(10),
               child: FloatingActionButton(
-                onPressed: () {
-                  //action code for button 3
-                },
+                onPressed: _decrementCounter,
                 backgroundColor: Colors.deepOrangeAccent,
-                child: Icon(Icons.add),
+                child: Icon(Icons.exposure_minus_1),
               )), // button third
 
           // Add more buttons here
