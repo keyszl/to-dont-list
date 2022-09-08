@@ -93,6 +93,11 @@ class _ToDoListState extends State<ToDoList> {
         _itemSet.remove(item);
         items.insert(0, item);
       }
+
+      items.sort((a, b) {
+        //sorting in ascending order
+        return a.name.compareTo(b.name);
+      });
     });
   }
 
