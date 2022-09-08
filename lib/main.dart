@@ -92,11 +92,16 @@ class _ToDoListState extends State<ToDoList> {
         print("Making Undone");
         _itemSet.remove(item);
         items.insert(0, item);
-      }
 
-      /*items.sort((a, b) { // this sorts the items list
-        return a.name.compareTo(b.name);
-      });*/
+        _itemSort();
+      }
+    });
+  }
+
+  void _itemSort() {
+    // a function that sorts the item
+    items.sort((a, b) {
+      return a.name.compareTo(b.name);
     });
   }
 
@@ -113,10 +118,7 @@ class _ToDoListState extends State<ToDoList> {
       Item item = Item(name: itemText);
       items.insert(0, item);
 
-      items.sort((a, b) {
-        // this sorts the items list
-        return a.name.compareTo(b.name);
-      });
+      _itemSort(); // calls the function i created
 
       _inputController.clear();
     });
