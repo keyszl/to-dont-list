@@ -77,10 +77,10 @@ flutter:
   fonts:
     - family: MyFlutterApp
       fonts:
-        - asset: assets/icons/MyFlutterApp.tff
+        - asset: assets\icons\MyFlutterApp.ttf  
     - family: thoughticon
       fonts:
-        - asset: assets/icons/FlutterThought.tff
+        - asset: assets\icons\FlutterThought.ttf  
       
  #   fonts:
   #    - family: NewIcons

@@ -1,10 +1,11 @@
-// cool thought s you have about your pet cat that you want to record into an app 
+// cool thought s you have about your pet cat that you want to record into an app
 // Started with https://docs.flutter.dev/development/ui/widgets-intro
 import 'package:flutter/material.dart';
 import 'package:to_dont_list/assets/thoughticon.dart';
 import 'package:to_dont_list/to_do_items.dart';
 
 import 'assets/icon.dart';
+import 'assets/thoughticon.dart';
 
 class ToDoList extends StatefulWidget {
   const ToDoList({super.key});
@@ -35,8 +36,7 @@ class _ToDoListState extends State<ToDoList> {
                 });
               },
               controller: _inputController,
-              decoration:
-                  const InputDecoration(hintText: "type it out here"),
+              decoration: const InputDecoration(hintText: "type it out here"),
             ),
             actions: <Widget>[
               ElevatedButton(
@@ -121,25 +121,58 @@ class _ToDoListState extends State<ToDoList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Thoughts about your pet cat'),
-        ),
-        body: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          children: items.map((item) {
-            return ToDoListItem(
-              item: item,
-              completed: _itemSet.contains(item),
-              onListChanged: _handleListChanged,
-              onDeleteItem: _handleDeleteItem,
-            );
-          }).toList(),
-        ),
-        floatingActionButton: FloatingActionButton(
-            child: const Icon(FlutterThought.thought),                      //imports my new icon 
-            onPressed: () {
-              _displayTextInputDialog(context);
-            }));
+      appBar: AppBar(
+        title: const Text('Thoughts about your pet cat'),
+      ),
+      floatingActionButton: Wrap(
+        //will break to another line on overflow
+        direction: Axis.horizontal, //use vertical to show  on vertical axis
+        children: <Widget>[
+          Container(
+              margin: EdgeInsets.all(10),
+              child: FloatingActionButton(
+                onPressed: () {
+                  _displayTextInputDialog(context);
+                  //action code for button 1
+                },
+                child: const Icon(FlutterThought.thought), // my icon
+              )), //button first
+
+          Container(
+              margin: EdgeInsets.all(10),
+              child: FloatingActionButton(
+                onPressed: () {
+                  //action code for button 2
+                },
+                backgroundColor: Colors.deepPurpleAccent,
+                child: Icon(Icons.add),
+              )), // button second
+
+          Container(
+              margin: EdgeInsets.all(10),
+              child: FloatingActionButton(
+                onPressed: () {
+                  //action code for button 3
+                },
+                backgroundColor: Colors.deepOrangeAccent,
+                child: Icon(Icons.add),
+              )), // button third
+
+          // Add more buttons here
+        ],
+      ),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        children: items.map((item) {
+          return ToDoListItem(
+            item: item,
+            completed: _itemSet.contains(item),
+            onListChanged: _handleListChanged,
+            onDeleteItem: _handleDeleteItem,
+          );
+        }).toList(),
+      ),
+    );
   }
 }
 
