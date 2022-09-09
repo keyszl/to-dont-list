@@ -93,7 +93,7 @@ class _ToDoListState extends State<ToDoList> {
         _itemSet.remove(item);
         items.insert(0, item);
 
-        _itemSort();
+        //_itemSort();
       }
     });
   }

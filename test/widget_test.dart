@@ -86,4 +86,46 @@ void main() {
   });
 
   // One to test the tap and press actions on the items?
+
+  testWidgets('ToDoList is sorted', (tester) async {
+    await tester.pumpWidget(const MaterialApp(home: ToDoList()));
+
+    expect(find.byType(TextField), findsNothing);
+
+    await tester.tap(find.byType(FloatingActionButton));
+    await tester.pump(); // Pump after every action to rebuild the widgets
+
+    await tester.enterText(find.byType(TextField), 'hi');
+    await tester.pump();
+
+    await tester.tap(find.byKey(const Key("OKButton")));
+    await tester.pump();
+    expect(find.text("hi"), findsOneWidget);
+
+    await tester.tap(find.byType(FloatingActionButton));
+    await tester.pump(); // Pump after every action to rebuild the widgets
+
+    await tester.enterText(find.byType(TextField), 'zoo');
+    await tester.pump();
+
+    await tester.tap(find.byKey(const Key("OKButton")));
+    await tester.pump();
+    expect(find.text("zoo"), findsOneWidget);
+
+    await tester.tap(find.byType(FloatingActionButton));
+    await tester.pump(); // Pump after every action to rebuild the widgets
+
+    await tester.enterText(find.byType(TextField), 'bob');
+    await tester.pump();
+
+    await tester.tap(find.byKey(const Key("OKButton")));
+    await tester.pump();
+    expect(find.text("bob"), findsOneWidget);
+
+    final listItemFinder = find.text("bob");
+    print(listItemFinder.first.toString().startsWith("b"));
+    print("what is happening");
+
+    expect(listItemFinder.first.toString().startsWith("b"), true);
+  });
 }
