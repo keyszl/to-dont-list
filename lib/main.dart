@@ -16,6 +16,8 @@ class _ToDoListState extends State<ToDoList> {
       textStyle: const TextStyle(fontSize: 20), primary: Colors.green);
   final ButtonStyle noStyle = ElevatedButton.styleFrom(
       textStyle: const TextStyle(fontSize: 20), primary: Colors.red);
+  final ButtonStyle plainStyle = ElevatedButton.styleFrom(
+      textStyle: const TextStyle(fontSize: 20), primary: Colors.blue);
 
   Future<void> _displayTextInputDialog(BuildContext context) async {
     print("Loading Dialog");
@@ -58,6 +60,17 @@ class _ToDoListState extends State<ToDoList> {
                 key: const Key("CancelButton"),
                 style: noStyle,
                 child: const Text('Cancel'),
+                onPressed: () {
+                  setState(() {
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+
+              ElevatedButton(
+                key: const Key("ColorButton"),
+                style: noStyle,
+                child: const Text('Color!'),
                 onPressed: () {
                   setState(() {
                     Navigator.pop(context);
