@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Item {
@@ -8,6 +9,11 @@ class Item {
   String abbrev() {
     return name.substring(0, 1);
   }
+}
+
+class Cat {
+  const Cat({required this.name});
+  final String name;
 }
 
 typedef ToDoListChangedCallback = Function(Item item, bool completed);
@@ -25,6 +31,8 @@ class ToDoListItem extends StatelessWidget {
   final bool completed;
   final ToDoListChangedCallback onListChanged;
   final ToDoListRemovedCallback onDeleteItem;
+
+  List<String> catsList = ["oliver", "ella"];
 
   Color _getColor(BuildContext context) {
     // The theme depends on the BuildContext because different
@@ -65,6 +73,7 @@ class ToDoListItem extends StatelessWidget {
         item.name,
         style: _getTextStyle(context),
       ),
+      subtitle: Text(catsList.toString()),
     );
   }
 }

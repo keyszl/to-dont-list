@@ -24,7 +24,7 @@ class _ToDoListState extends State<ToDoList> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text('Item To Add'),
+            title: const Text('Add a Location'),
             content: TextField(
               onChanged: (value) {
                 setState(() {
@@ -32,8 +32,7 @@ class _ToDoListState extends State<ToDoList> {
                 });
               },
               controller: _inputController,
-              decoration:
-                  const InputDecoration(hintText: "type something here"),
+              decoration: const InputDecoration(hintText: "type location here"),
             ),
             actions: <Widget>[
               ElevatedButton(
@@ -74,7 +73,11 @@ class _ToDoListState extends State<ToDoList> {
 
   String valueText = "";
 
-  final List<Item> items = [const Item(name: "add more todos")];
+  final List<Item> items = [
+    const Item(name: "Trieschmann"),
+    const Item(name: "Brick Pit"),
+    const Item(name: "Bailey")
+  ];
 
   final _itemSet = <Item>{};
 
@@ -86,17 +89,52 @@ class _ToDoListState extends State<ToDoList> {
       // The framework then calls build, below,
       // which updates the visual appearance of the app.
 
-      items.remove(item);
-      if (!completed) {
-        print("Completing");
-        _itemSet.add(item);
-        items.add(item);
-      } else {
-        print("Making Undone");
-        _itemSet.remove(item);
-        items.insert(0, item);
-      }
+      //items.remove(item);
+      //if (!completed) {
+      //  print("Completing");
+      //  _itemSet.add(item);
+      //  items.add(item);
+      //} else {
+      //  print("Making Undone");
+      //  _itemSet.remove(item);
+      //  items.insert(0, item);
+      //}
+
+      _displayCatInput(context);
     });
+  }
+
+  Future<void> _displayCatInput(BuildContext context) async {
+    print("Loading Cat Dialog");
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+              title: const Text('Add a Cat'),
+              content: TextField(
+                onChanged: (value) {
+                  setState(() {
+                    valueText = value;
+                  });
+                },
+                controller: _inputController,
+                decoration:
+                    const InputDecoration(hintText: "type cat name here"),
+              ),
+              actions: <Widget>[
+                ElevatedButton(
+                  key: const Key("OKButton"),
+                  style: yesStyle,
+                  onPressed: () {
+                    setState(() {
+                      //needs to add a cat in the list
+                      Navigator.pop(context);
+                    });
+                  },
+                  child: const Text('Ok'),
+                ),
+              ]);
+        });
   }
 
   void _handleDeleteItem(Item item) {
@@ -119,7 +157,8 @@ class _ToDoListState extends State<ToDoList> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('To Do List'),
+          title: const Text('Hendrix Cats'),
+          backgroundColor: Colors.orange,
         ),
         body: ListView(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -142,7 +181,7 @@ class _ToDoListState extends State<ToDoList> {
 
 void main() {
   runApp(const MaterialApp(
-    title: 'To Do List',
+    title: 'Hendrix Cats',
     home: ToDoList(),
   ));
 }
