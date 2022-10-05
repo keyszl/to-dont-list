@@ -74,9 +74,9 @@ class _ToDoListState extends State<ToDoList> {
   String valueText = "";
 
   final List<Item> items = [
-    const Item(name: "Trieschmann"),
-    const Item(name: "Brick Pit"),
-    const Item(name: "Bailey")
+    Item(name: "Trieschmann", catList: []),
+    Item(name: "Brick Pit", catList: []),
+    Item(name: "Bailey", catList: [])
   ];
 
   final _itemSet = <Item>{};
@@ -99,12 +99,15 @@ class _ToDoListState extends State<ToDoList> {
       //  _itemSet.remove(item);
       //  items.insert(0, item);
       //}
-
-      _displayCatInput(context);
+      _displayCatInput(context, item);
     });
   }
 
-  Future<void> _displayCatInput(BuildContext context) async {
+  void _handleAddCat(Item item, String name) {
+    item.catList.add(name);
+  }
+
+  Future<void> _displayCatInput(BuildContext context, Item item) async {
     print("Loading Cat Dialog");
     return showDialog(
         context: context,
@@ -123,16 +126,26 @@ class _ToDoListState extends State<ToDoList> {
               ),
               actions: <Widget>[
                 ElevatedButton(
-                  key: const Key("OKButton"),
+                  key: const Key("OKButtonCat"),
                   style: yesStyle,
                   onPressed: () {
                     setState(() {
-                      //needs to add a cat in the list
+                      //needs to add a cat in the list #########################################################################################################
+                      _handleAddCat(item, valueText);
                       Navigator.pop(context);
                     });
                   },
                   child: const Text('Ok'),
                 ),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      Navigator.pop(context);
+                    });
+                  },
+                  style: noStyle,
+                  child: const Text('Cancel'),
+                )
               ]);
         });
   }
@@ -147,7 +160,7 @@ class _ToDoListState extends State<ToDoList> {
   void _handleNewItem(String itemText) {
     setState(() {
       print("Adding new item");
-      Item item = Item(name: itemText);
+      Item item = Item(name: itemText, catList: []);
       items.insert(0, item);
       _inputController.clear();
     });
@@ -168,6 +181,7 @@ class _ToDoListState extends State<ToDoList> {
               completed: _itemSet.contains(item),
               onListChanged: _handleListChanged,
               onDeleteItem: _handleDeleteItem,
+              catList: [],
             );
           }).toList(),
         ),
