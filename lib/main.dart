@@ -73,14 +73,13 @@ class _ToDoListState extends State<ToDoList> {
 
   String valueText = "";
 
-  final List<Item> items = [
-    Item(name: "Trieschmann", catList: []),
-    Item(name: "Brick Pit", catList: []),
-    Item(name: "Bailey", catList: [])
-  ];
+  //starts with one item in the list:  "Brick Pit"
+  final List<Item> items = [Item(name: "Brick Pit", catList: [])];
 
   final _itemSet = <Item>{};
 
+  //most of this is commented out from the original to-do list
+  //if I want to remove an item or have a strikethrough, I could uncomment
   void _handleListChanged(Item item, bool completed) {
     setState(() {
       // When a user changes what's in the list, you need
@@ -107,6 +106,8 @@ class _ToDoListState extends State<ToDoList> {
     item.catList.add(name);
   }
 
+  //adds a cat to one item in the list
+  //the list is displayed as a subtitle underneath the item
   Future<void> _displayCatInput(BuildContext context, Item item) async {
     print("Loading Cat Dialog");
     return showDialog(
@@ -130,7 +131,7 @@ class _ToDoListState extends State<ToDoList> {
                   style: yesStyle,
                   onPressed: () {
                     setState(() {
-                      //needs to add a cat in the list #########################################################################################################
+                      //new cat added to an item on the list
                       _handleAddCat(item, valueText);
                       Navigator.pop(context);
                     });
@@ -157,6 +158,7 @@ class _ToDoListState extends State<ToDoList> {
     });
   }
 
+  //adding a new item to the list with an empty cat list
   void _handleNewItem(String itemText) {
     setState(() {
       print("Adding new item");

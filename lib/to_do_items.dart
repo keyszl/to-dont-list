@@ -11,6 +11,7 @@ class Item {
     return name.substring(0, 1);
   }
 
+  // transforms a List<String> into a useful String separated by commas
   String catsString() {
     if (catList.isEmpty) {
       return "";
@@ -77,9 +78,7 @@ class ToDoListItem extends StatelessWidget {
           item.name,
           style: _getTextStyle(context),
         ),
-//############################################################################################################################################
-        subtitle: Text(item.catsString())
-//############################################################################################################################################
-        );
+        // the list is displayed as a subtitle
+        subtitle: Text(item.catsString()));
   }
 }

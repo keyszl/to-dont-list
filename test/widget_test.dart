@@ -13,7 +13,7 @@ import 'package:to_dont_list/to_do_items.dart';
 
 void main() {
   test('Item abbreviation should be first letter', () {
-    const item = Item(name: "add more todos");
+    Item item = Item(name: "add more todos", catList: []);
     expect(item.abbrev(), "a");
   });
 
@@ -22,8 +22,9 @@ void main() {
     await tester.pumpWidget(MaterialApp(
         home: Scaffold(
             body: ToDoListItem(
-                item: const Item(name: "test"),
+                item: Item(name: "test", catList: []),
                 completed: true,
+                catList: [],
                 onListChanged: (Item item, bool completed) {},
                 onDeleteItem: (Item item) {}))));
     final textFinder = find.text('test');
@@ -38,8 +39,9 @@ void main() {
     await tester.pumpWidget(MaterialApp(
         home: Scaffold(
             body: ToDoListItem(
-                item: const Item(name: "test"),
+                item: Item(name: "test", catList: []),
                 completed: true,
+                catList: [],
                 onListChanged: (Item item, bool completed) {},
                 onDeleteItem: (Item item) {}))));
     final abbvFinder = find.text('t');
@@ -85,5 +87,26 @@ void main() {
     expect(listItemFinder, findsNWidgets(2));
   });
 
-  // One to test the tap and press actions on the items?
+  testWidgets('Tapping and typing adds a cat to location item', (tester) async {
+    // this tests the functionality of everything I added
+    await tester.pumpWidget(const MaterialApp(home: ToDoList()));
+
+    // could add a tester to add an item here, but I start with an item already in there called "Brick Pit"
+
+    //enters a cat with name 'cat name' to a list item
+    await tester.tap(find.byType(ListTile));
+    await tester.pump();
+    await tester.enterText(find.byType(TextField), 'cat name');
+    await tester.tap(find.byKey(const Key("OKButtonCat")));
+    await tester.pump();
+
+    // expects to find the name in a list item
+    expect(find.text("cat name"), findsOneWidget);
+  });
+
+  test('catsString transforms catList into a comma-separated string', () {
+    Item item =
+        Item(name: "item name", catList: ['Ella', 'Oliver', 'Dustbunny']);
+    expect(item.catsString(), "Ella, Oliver, Dustbunny");
+  });
 }
