@@ -33,8 +33,7 @@ void main() {
     expect(textFinder, findsOneWidget);
   });
 
-  testWidgets('ToDoListItem has a Circle Avatar with abbreviation',
-      (tester) async {
+  testWidgets('ToDoListItem has a Circle Avatar', (tester) async {
     await tester.pumpWidget(MaterialApp(
         home: Scaffold(
             body: ToDoListItem(
@@ -42,17 +41,11 @@ void main() {
                 completed: true,
                 onListChanged: (Item item, bool completed) {},
                 onDeleteItem: (Item item) {}))));
-    final abbvFinder = find.text('t');
     final avatarFinder = find.byType(CircleAvatar);
 
     CircleAvatar circ = tester.firstWidget(avatarFinder);
-    Text ctext = circ.child as Text;
-
-    // Use the `findsOneWidget` matcher provided by flutter_test to verify
-    // that the Text widgets appear exactly once in the widget tree.
-    expect(abbvFinder, findsOneWidget);
+    Icon? ctext = circ.child as Icon?;
     expect(circ.backgroundColor, Colors.black54);
-    expect(ctext.data, "t");
   });
 
   testWidgets('Default ToDoList has one item', (tester) async {
@@ -68,7 +61,7 @@ void main() {
 
     expect(find.byType(TextField), findsNothing);
 
-    await tester.tap(find.byType(FloatingActionButton));
+    await tester.tap(find.byKey(const Key("TextInput")));
     await tester.pump(); // Pump after every action to rebuild the widgets
     expect(find.text("hi"), findsNothing);
 
@@ -85,5 +78,51 @@ void main() {
     expect(listItemFinder, findsNWidgets(2));
   });
 
+  testWidgets("Unit test for the new TextField", (tester) async {
+    await tester.pumpWidget(const MaterialApp(home: ToDoList()));
+    await tester.pump();
+
+    await tester.tap(find.byKey(const Key("TextInput")));
+    await tester.pump();
+
+    expect(find.byKey(const Key("Thought Key")), findsOneWidget);
+  });
+
   // One to test the tap and press actions on the items?
+  // I can also make this unit test work!
+  testWidgets("Testing the floating action buttons on the main page",
+      (tester) async {
+    await tester.pumpWidget(const MaterialApp(home: ToDoList()));
+    await tester.pump();
+
+    await tester.tap(find.byKey(const Key("Increment")));
+    await tester.pump();
+
+    expect(find.byKey(const Key("Increment")), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key("Decrement")));
+    await tester.pump();
+
+    expect(find.byKey(const Key("Decrement")), findsOneWidget);
+  });
+
+  testWidgets("Testing the floating action buttons in the text field page",
+      (tester) async {
+    await tester.pumpWidget(const MaterialApp(home: ToDoList()));
+    await tester.pump();
+
+    await tester.tap(find.byKey(const Key("TextInput")));
+    await tester.pump();
+
+    expect(find.byKey(const Key("Pointsgood")), findsOneWidget);
+    await tester.tap(find.byKey(const Key("Pointsgood")));
+    await tester.pump();
+
+    await tester.tap(find.byKey(const Key("TextInput")));
+    await tester.pump();
+
+    expect(find.byKey(const Key("Pointsbad")), findsOneWidget);
+    await tester.tap(find.byKey(const Key("Pointsbad")));
+    await tester.pump();
+  });
 }
