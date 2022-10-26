@@ -74,7 +74,7 @@ class _ToDoListState extends State<ToDoList> {
                 onPressed: () {
                   setState(() {
                     _incrementCounter();
-                    Navigator.pop(context);
+                    //Navigator.pop(context);
                   });
                 },
               ),
@@ -86,7 +86,7 @@ class _ToDoListState extends State<ToDoList> {
                   setState(() {
                     _decrementCounter();
 
-                    Navigator.pop(context);
+                    //Navigator.pop(context);
                   });
                 },
               ),
