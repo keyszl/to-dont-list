@@ -97,4 +97,39 @@ void main() {
 
   // One to test the tap and press actions on the items?
   // I can also make this unit test work!
+  testWidgets("Testing the floating action buttons on the main page",
+      (tester) async {
+    await tester.pumpWidget(const MaterialApp(home: ToDoList()));
+    await tester.pump();
+
+    await tester.tap(find.byKey(const Key("Increment")));
+    await tester.pump();
+
+    expect(find.byKey(const Key("Increment")), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key("Decrement")));
+    await tester.pump();
+
+    expect(find.byKey(const Key("Decrement")), findsOneWidget);
+  });
+
+  testWidgets("Testing the floating action buttons in the text field page",
+      (tester) async {
+    await tester.pumpWidget(const MaterialApp(home: ToDoList()));
+    await tester.pump();
+
+    await tester.tap(find.byKey(const Key("TextInput")));
+    await tester.pump();
+
+    expect(find.byKey(const Key("Pointsgood")), findsOneWidget);
+    await tester.tap(find.byKey(const Key("Pointsgood")));
+    await tester.pump();
+
+    await tester.tap(find.byKey(const Key("TextInput")));
+    await tester.pump();
+
+    expect(find.byKey(const Key("Pointsbad")), findsOneWidget);
+    await tester.tap(find.byKey(const Key("Pointsbad")));
+    await tester.pump();
+  });
 }

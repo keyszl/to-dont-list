@@ -193,6 +193,8 @@ class _ToDoListState extends State<ToDoList> {
           Container(
               margin: EdgeInsets.all(10),
               child: FloatingActionButton(
+                  //added key for unit test
+                  key: const Key("Increment"),
                   onPressed: _incrementCounter,
                   backgroundColor: Colors.deepPurpleAccent,
                   child: Icon(Icons.exposure_plus_1))), // button second
@@ -200,6 +202,8 @@ class _ToDoListState extends State<ToDoList> {
           Container(
               margin: EdgeInsets.all(10),
               child: FloatingActionButton(
+                //added key for unit test
+                key: const Key("Decrement"),
                 onPressed: _decrementCounter,
                 backgroundColor: Colors.deepOrangeAccent,
                 child: Icon(Icons.exposure_minus_1),
