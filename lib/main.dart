@@ -44,6 +44,7 @@ class _ToDoListState extends State<ToDoList> {
           return AlertDialog(
             title: const Text('Thought To Add'),
             content: TextField(
+              key: const Key("Thought Key"),
               maxLines:
                   4, // https://www.fluttercampus.com/guide/176/how-to-make-multi-line-textfield-input-textarea-in-flutter/#:~:text=How%20to%20Make%20Multi-line%20TextField%20in%20Flutter%3A%20TextField%28keyboardType%3A,line%20that%20looks%20exactly%20like%20textarea%20in%20HTML.
               onChanged: (value) {
@@ -73,6 +74,7 @@ class _ToDoListState extends State<ToDoList> {
                 onPressed: () {
                   setState(() {
                     _incrementCounter();
+                    Navigator.pop(context);
                   });
                 },
               ),
@@ -83,6 +85,8 @@ class _ToDoListState extends State<ToDoList> {
                 onPressed: () {
                   setState(() {
                     _decrementCounter();
+
+                    Navigator.pop(context);
                   });
                 },
               ),
@@ -178,6 +182,7 @@ class _ToDoListState extends State<ToDoList> {
           Container(
               margin: EdgeInsets.all(10),
               child: FloatingActionButton(
+                key: const Key("TextInput"),
                 onPressed: () {
                   _displayTextInputDialog(context);
                   //action code for button 1
