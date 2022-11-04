@@ -117,7 +117,7 @@ class _ToDoListState extends State<ToDoList> {
 
   String valueText = "";
 
-  final List<Item> items = [const Item(name: "add more todos")];
+  final List<Item> items = [const Item(name: "add more cool cat things")];
 
   final _itemSet = <Item>{};
 
