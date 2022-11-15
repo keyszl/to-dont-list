@@ -1,10 +1,13 @@
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Item {
-  Item({required this.name, required this.catList});
+  Item({required this.name, required this.catList, required this.imageP});
 
   final String name;
+  String imageP;
   List<String> catList;
 
   String abbrev() {
@@ -59,26 +62,37 @@ class ToDoListItem extends StatelessWidget {
     );
   }
 
+  // fun cat pictures I found on pinterest!
+  // feel free to add more images
+
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-        onTap: () {
-          onListChanged(item, completed);
-        },
-        onLongPress: completed
-            ? () {
-                onDeleteItem(item);
-              }
-            : null,
-        leading: CircleAvatar(
-          backgroundColor: _getColor(context),
-          child: Text(item.abbrev()),
-        ),
-        title: Text(
-          item.name,
-          style: _getTextStyle(context),
-        ),
-        // the list is displayed as a subtitle
-        subtitle: Text(item.catsString()));
+    //assets.shuffle();
+    //String imagePath = assets[0]; // initalize it as first image
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ListTile(
+          onTap: () {
+            onListChanged(item, completed);
+          },
+          onLongPress: completed
+              ? () {
+                  onDeleteItem(item);
+                }
+              : null,
+          //leading: CircleAvatar(
+          //  backgroundColor: _getColor(context),
+          //  child: Text(item.abbrev()),
+          //),
+          title: Text(
+            item.name,
+            style: _getTextStyle(context),
+          ),
+          trailing: CircleAvatar(
+            backgroundImage: NetworkImage(item.imageP),
+          ),
+          // the list is displayed as a subtitle
+          subtitle: Text(item.catsString())),
+    );
   }
 }

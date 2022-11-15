@@ -1,5 +1,6 @@
 // Started with https://docs.flutter.dev/development/ui/widgets-intro
-
+import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:to_dont_list/to_do_items.dart';
 
@@ -42,30 +43,21 @@ class _ToDoListState extends State<ToDoList> {
                   setState(() {
                     _handleNewItem(valueText);
                     Navigator.pop(context);
+                    //valueText = "";
                   });
                 },
                 child: const Text('Ok'),
               ),
-
-              // https://stackoverflow.com/questions/52468987/how-to-turn-disabled-button-into-enabled-button-depending-on-conditions
-              ValueListenableBuilder<TextEditingValue>(
-                valueListenable: _inputController,
-                builder: (context, value, child) {
-                  return ElevatedButton(
-                    key: const Key("CancelButton"),
-                    style: noStyle,
-                    onPressed: value.text.isNotEmpty
-                        ? () {
-                            setState(() {
-                              _handleNewItem(valueText);
-                              Navigator.pop(context);
-                            });
-                          }
-                        : null,
-                    child: const Text('Cancel'),
-                  );
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    Navigator.pop(context);
+                    _inputController.clear();
+                  });
                 },
-              ),
+                style: noStyle,
+                child: const Text('Cancel'),
+              )
             ],
           );
         });
@@ -74,12 +66,19 @@ class _ToDoListState extends State<ToDoList> {
   String valueText = "";
 
   //starts with one item in the list:  "Brick Pit"
-  final List<Item> items = [Item(name: "Brick Pit", catList: [])];
+  final List<Item> items = [
+    Item(
+        name: "Brick Pit",
+        catList: [],
+        imageP:
+            "https://i.pinimg.com/564x/22/71/48/22714827862d17e1a1a78bd344bfc5fc.jpg")
+  ];
 
   final _itemSet = <Item>{};
 
   //most of this is commented out from the original to-do list
   //if I want to remove an item or have a strikethrough, I could uncomment
+
   void _handleListChanged(Item item, bool completed) {
     setState(() {
       // When a user changes what's in the list, you need
@@ -98,12 +97,14 @@ class _ToDoListState extends State<ToDoList> {
       //  _itemSet.remove(item);
       //  items.insert(0, item);
       //}
+
       _displayCatInput(context, item);
     });
   }
 
   void _handleAddCat(Item item, String name) {
     item.catList.add(name);
+    _inputController.clear();
   }
 
   //adds a cat to one item in the list
@@ -125,6 +126,7 @@ class _ToDoListState extends State<ToDoList> {
                 decoration:
                     const InputDecoration(hintText: "type cat name here"),
               ),
+              //child: Image.asset('images/cat.png'),
               actions: <Widget>[
                 ElevatedButton(
                   key: const Key("OKButtonCat"),
@@ -134,6 +136,7 @@ class _ToDoListState extends State<ToDoList> {
                       //new cat added to an item on the list
                       _handleAddCat(item, valueText);
                       Navigator.pop(context);
+                      //valueText = "";
                     });
                   },
                   child: const Text('Ok'),
@@ -142,6 +145,7 @@ class _ToDoListState extends State<ToDoList> {
                   onPressed: () {
                     setState(() {
                       Navigator.pop(context);
+                      _inputController.clear();
                     });
                   },
                   style: noStyle,
@@ -162,10 +166,27 @@ class _ToDoListState extends State<ToDoList> {
   void _handleNewItem(String itemText) {
     setState(() {
       print("Adding new item");
-      Item item = Item(name: itemText, catList: []);
+      Item item = Item(name: itemText, catList: [], imageP: newCatImage());
       items.insert(0, item);
       _inputController.clear();
     });
+  }
+
+  String newCatImage() {
+    List<String> assets = [
+      "https://i.pinimg.com/564x/22/71/48/22714827862d17e1a1a78bd344bfc5fc.jpg",
+      "https://i.pinimg.com/564x/e1/9f/47/e19f4768a10c3f399fd5ba92fc4186eb.jpg",
+      "https://i.pinimg.com/564x/78/69/72/786972cceb9f7bf266778a5775848b12.jpg",
+      "https://i.pinimg.com/564x/08/94/bc/0894bcf8403d83d0ee3eb6292aba11b7.jpg",
+      "https://i.pinimg.com/564x/1f/80/3a/1f803a87bfed8f5642d8c74444a137f4.jpg",
+      "https://i.pinimg.com/564x/bb/57/1a/bb571ae2c97458708155956fa5f2801e.jpg",
+      "https://i.pinimg.com/736x/7e/6a/6e/7e6a6edd9edea50c1273a6eb81d05ae9.jpg",
+      "https://i.pinimg.com/564x/8c/4a/51/8c4a51e005629a084505649079b0a949.jpg",
+      "https://i.pinimg.com/564x/e2/25/37/e2253703557b7e6477e32891be4c667e.jpg",
+    ];
+    assets.shuffle();
+    print(assets[0]);
+    return assets[0];
   }
 
   @override
@@ -184,6 +205,7 @@ class _ToDoListState extends State<ToDoList> {
               onListChanged: _handleListChanged,
               onDeleteItem: _handleDeleteItem,
               catList: [],
+              //newCat: _newCat(),
             );
           }).toList(),
         ),
@@ -196,8 +218,15 @@ class _ToDoListState extends State<ToDoList> {
 }
 
 void main() {
-  runApp(const MaterialApp(
+  runApp(MaterialApp(
     title: 'Hendrix Cats',
+    theme: ThemeData(
+      brightness: Brightness.light,
+    ),
+    darkTheme: ThemeData(
+      brightness: Brightness.dark,
+    ),
+    themeMode: ThemeMode.dark,
     home: ToDoList(),
   ));
 }
