@@ -12,6 +12,8 @@ class ToDoList extends StatefulWidget {
 class _ToDoListState extends State<ToDoList> {
   // Dialog with text from https://www.appsdeveloperblog.com/alert-dialog-with-a-text-field-in-flutter/
   final TextEditingController _inputController = TextEditingController();
+  final TextEditingController _inputController2 = TextEditingController();
+
   final ButtonStyle yesStyle = ElevatedButton.styleFrom(
       textStyle: const TextStyle(fontSize: 20), primary: Colors.green);
   final ButtonStyle noStyle = ElevatedButton.styleFrom(
@@ -19,14 +21,47 @@ class _ToDoListState extends State<ToDoList> {
   final ButtonStyle plainStyle = ElevatedButton.styleFrom(
       textStyle: const TextStyle(fontSize: 20), primary: Colors.blue);
 
+  String _game = '';
+  String _rating = '';
+
   Future<void> _displayTextInputDialog(BuildContext context) async {
     print("Loading Dialog");
     return showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text('Item To Add'),
-            content: TextField(
+            title: const Text('Add a Game'),
+            content: Column(
+              children: [
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Enter the video game name:',
+                  ),
+                  onChanged: (text) => setState(() => _game = text),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Enter a name.';
+                    }
+                    return null;
+                  },
+                  controller: _inputController,
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Enter a rating on a 5.0 scale:',
+                  ),
+                  onChanged: (text) => setState(() => _rating = text),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Enter a rating.';
+                    }
+                    return null;
+                  },
+                  controller: _inputController2,
+                ),
+              ],
+            ),
+            /*TextField(
               onChanged: (value) {
                 setState(() {
                   valueText = value;
@@ -35,7 +70,7 @@ class _ToDoListState extends State<ToDoList> {
               controller: _inputController,
               decoration:
                   const InputDecoration(hintText: "type something here"),
-            ),
+            ),*/
             actions: <Widget>[
               // https://stackoverflow.com/questions/52468987/how-to-turn-disabled-button-into-enabled-button-depending-on-conditions
               ValueListenableBuilder<TextEditingValue>(
@@ -84,7 +119,7 @@ class _ToDoListState extends State<ToDoList> {
 
   String valueText = "";
 
-  final List<Item> items = [const Item(name: "add more todos")];
+  final List<Item> items = [const Item(name: "add more games")];
 
   final _itemSet = <Item>{};
 
@@ -134,6 +169,7 @@ class _ToDoListState extends State<ToDoList> {
       _itemSort(); // calls the function i created
 
       _inputController.clear();
+      _inputController2.clear();
     });
   }
 
@@ -141,7 +177,7 @@ class _ToDoListState extends State<ToDoList> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('To Do List'),
+          title: const Text('Video Game Ranker'),
         ),
         body: ListView(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
