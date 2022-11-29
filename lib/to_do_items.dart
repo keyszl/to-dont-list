@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:to_dont_list/main.dart';
 
 class Item {
-  const Item({required this.name});
-
+  const Item({required this.name, required this.rating});
+  final String rating;
   final String name;
 
   String abbrev() {
@@ -57,7 +57,7 @@ class ToDoListItem extends StatelessWidget {
           : null,
       leading: CircleAvatar(
         backgroundColor: _getColor(),
-        child: Text(item.abbrev()),
+        //child: Text(item.abbrev()),
       ),
       title: Text(
         item.name,

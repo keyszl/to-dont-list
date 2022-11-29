@@ -13,7 +13,7 @@ import 'package:to_dont_list/to_do_items.dart';
 
 void main() {
   test('Item abbreviation should be first letter', () {
-    const item = Item(name: "add more todos");
+    const item = Item(name: "Tomb Raider", rating: "4.2");
     expect(item.abbrev(), "a");
   });
 
@@ -22,7 +22,7 @@ void main() {
     await tester.pumpWidget(MaterialApp(
         home: Scaffold(
             body: ToDoListItem(
-                item: const Item(name: "test"),
+                item: const Item(name: "test", rating: "3.3"),
                 completed: true,
                 onListChanged: (Item item, bool completed) {},
                 onDeleteItem: (Item item) {}))));
@@ -38,7 +38,7 @@ void main() {
     await tester.pumpWidget(MaterialApp(
         home: Scaffold(
             body: ToDoListItem(
-                item: const Item(name: "test"),
+                item: const Item(name: "test", rating: "3.3"),
                 completed: true,
                 onListChanged: (Item item, bool completed) {},
                 onDeleteItem: (Item item) {}))));
@@ -123,8 +123,6 @@ void main() {
     expect(find.text("bob"), findsOneWidget);
 
     final listItemFinder = find.text("bob");
-    print(listItemFinder.first.toString().startsWith("b"));
-    print("what is happening");
 
     expect(listItemFinder.first.toString().startsWith("b"), true);
   });
