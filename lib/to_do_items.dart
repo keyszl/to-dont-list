@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:to_dont_list/main.dart';
 
 class Item {
-  const Item({required this.name});
-
+  const Item({required this.name, required this.rating});
+  final String rating;
   final String name;
 
   String abbrev() {
@@ -26,15 +27,12 @@ class ToDoListItem extends StatelessWidget {
   final ToDoListChangedCallback onListChanged;
   final ToDoListRemovedCallback onDeleteItem;
 
-  Color _getColor(BuildContext context) {
-    // The theme depends on the BuildContext because different
-    // parts of the tree can have different themes.
-    // The BuildContext indicates where the build is
-    // taking place and therefore which theme to use.
-
-    return completed //
-        ? Colors.black54
-        : Theme.of(context).primaryColor;
+  
+  Color _getColor() {
+    //gets the string from the drop down menu
+    String decider = getValue();
+    //selects a color based off of that string
+    return colorSelect(decider);
   }
 
   TextStyle? _getTextStyle(BuildContext context) {
@@ -58,8 +56,8 @@ class ToDoListItem extends StatelessWidget {
             }
           : null,
       leading: CircleAvatar(
-        backgroundColor: _getColor(context),
-        child: Text(item.abbrev()),
+        backgroundColor: _getColor(),
+        //child: Text(item.abbrev()),
       ),
       title: Text(
         item.name,

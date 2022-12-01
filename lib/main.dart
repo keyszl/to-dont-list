@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:to_dont_list/to_do_items.dart';
 
+ String dropdownValue = "blue";
+
 class ToDoList extends StatefulWidget {
   const ToDoList({super.key});
 
@@ -15,17 +17,13 @@ class _ToDoListState extends State<ToDoList> {
   final TextEditingController _inputController2 = TextEditingController();
 
   final ButtonStyle yesStyle = ElevatedButton.styleFrom(
-      textStyle: const TextStyle(fontSize: 20), primary: Colors.green);
+      textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.green);
   final ButtonStyle noStyle = ElevatedButton.styleFrom(
-      textStyle: const TextStyle(fontSize: 20), primary: Colors.red);
+      textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.red);
   final ButtonStyle plainStyle = ElevatedButton.styleFrom(
-      textStyle: const TextStyle(fontSize: 20), primary: Colors.blue);
-
-  String _game = '';
-  String _rating = '';
+      textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.blue);
 
   Future<void> _displayTextInputDialog(BuildContext context) async {
-    print("Loading Dialog");
     return showDialog(
         context: context,
         builder: (context) {
@@ -82,7 +80,7 @@ class _ToDoListState extends State<ToDoList> {
                     onPressed: value.text.isNotEmpty
                         ? () {
                             setState(() {
-                              _handleNewItem(valueText);
+                              _handleNewItem(value.text);
                               Navigator.pop(context);
                             });
                           }
@@ -101,17 +99,6 @@ class _ToDoListState extends State<ToDoList> {
                   });
                 },
               ),
-
-              ElevatedButton(
-                key: const Key("ColorButton"),
-                style: noStyle,
-                child: const Text('Color!'),
-                onPressed: () {
-                  setState(() {
-                    Navigator.pop(context);
-                  });
-                },
-              ),
             ],
           );
         });
@@ -119,32 +106,26 @@ class _ToDoListState extends State<ToDoList> {
 
   String valueText = "";
 
-  final List<Item> items = [const Item(name: "add more games")];
+  String _game = "";
+  String _rating = "";
+
+  final List<Item> items = [const Item(name: "add more games", rating:  "1.7")];
 
   final _itemSet = <Item>{};
 
   void _handleListChanged(Item item, bool completed) {
     setState(() {
-      // When a user changes what's in the list, you need
-      // to change _itemSet inside a setState call to
-      // trigger a rebuild.
-      // The framework then calls build, below,
-      // which updates the visual appearance of the app.
-
       items.remove(item);
       if (!completed) {
-        print("Completing");
         _itemSet.add(item);
         items.add(item);
       } else {
-        print("Making Undone");
         _itemSet.remove(item);
         items.insert(0, item);
-
-        //_itemSort();
       }
     });
   }
+  
 
   void _itemSort() {
     // a function that sorts the item
@@ -155,15 +136,14 @@ class _ToDoListState extends State<ToDoList> {
 
   void _handleDeleteItem(Item item) {
     setState(() {
-      print("Deleting item");
       items.remove(item);
     });
   }
 
   void _handleNewItem(String itemText) {
     setState(() {
-      print("Adding new item");
-      Item item = Item(name: itemText);
+      _rating = "2.4";
+      Item item = Item(name: itemText, rating: _rating);
       items.insert(0, item);
 
       _itemSort(); // calls the function i created
@@ -177,7 +157,7 @@ class _ToDoListState extends State<ToDoList> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Video Game Ranker'),
+          title: const Text('To Do List'),
         ),
         body: ListView(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -190,6 +170,23 @@ class _ToDoListState extends State<ToDoList> {
             );
           }).toList(),
         ),
+          //creates the dropdown menu needed to select the color of the icons
+        drawer:  DropdownButton<String>(
+              isExpanded: true,
+              value: dropdownValue, 
+              dropdownColor: colorSelect(dropdownValue),
+              items: <String>["pink", "red", "blue", "green", "purple"]
+              .map<DropdownMenuItem<String>>((String value){
+                return DropdownMenuItem<String>(
+                  value:value,
+                child: Text(value)
+                );
+              }).toList(), 
+              onChanged: (String? newValue){
+                setState(() {
+                  dropdownValue = newValue!;
+                });
+              }),
         floatingActionButton: FloatingActionButton(
             child: const Icon(Icons.add),
             onPressed: () {
@@ -197,6 +194,23 @@ class _ToDoListState extends State<ToDoList> {
             }));
   }
 }
+Color colorSelect(String colorChange){
+    if (colorChange == "pink"){
+      return Colors.pink;
+    }else if(colorChange == "red"){
+      return Colors.red;
+    }else if(colorChange == "purple"){
+      return Colors.purple;
+    }else if(colorChange == "green"){
+      return Colors.green;
+    }else if(colorChange == "blue"){
+      return Colors.blue;
+    }
+    return Colors.orange;
+  }
+      String getValue(){
+    return dropdownValue;
+  }
 
 void main() {
   runApp(const MaterialApp(
