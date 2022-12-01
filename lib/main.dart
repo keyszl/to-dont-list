@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:to_dont_list/to_do_items.dart';
 
- String dropdownValue = "blue";
+String dropdownValue = "blue";
 
 class ToDoList extends StatefulWidget {
   const ToDoList({super.key});
@@ -109,7 +109,7 @@ class _ToDoListState extends State<ToDoList> {
   String _game = "";
   String _rating = "";
 
-  final List<Item> items = [const Item(name: "add more games", rating:  "1.7")];
+  final List<Item> items = [const Item(name: "add more games", rating: "1.7")];
 
   final _itemSet = <Item>{};
 
@@ -125,7 +125,6 @@ class _ToDoListState extends State<ToDoList> {
       }
     });
   }
-  
 
   void _itemSort() {
     // a function that sorts the item
@@ -157,7 +156,7 @@ class _ToDoListState extends State<ToDoList> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('To Do List'),
+          title: const Text('Video Game Rater'),
         ),
         body: ListView(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -170,23 +169,20 @@ class _ToDoListState extends State<ToDoList> {
             );
           }).toList(),
         ),
-          //creates the dropdown menu needed to select the color of the icons
-        drawer:  DropdownButton<String>(
-              isExpanded: true,
-              value: dropdownValue, 
-              dropdownColor: colorSelect(dropdownValue),
-              items: <String>["pink", "red", "blue", "green", "purple"]
-              .map<DropdownMenuItem<String>>((String value){
-                return DropdownMenuItem<String>(
-                  value:value,
-                child: Text(value)
-                );
-              }).toList(), 
-              onChanged: (String? newValue){
-                setState(() {
-                  dropdownValue = newValue!;
-                });
-              }),
+        //creates the dropdown menu needed to select the color of the icons
+        drawer: DropdownButton<String>(
+            isExpanded: true,
+            value: dropdownValue,
+            dropdownColor: colorSelect(dropdownValue),
+            items: <String>["pink", "red", "blue", "green", "purple"]
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(value: value, child: Text(value));
+            }).toList(),
+            onChanged: (String? newValue) {
+              setState(() {
+                dropdownValue = newValue!;
+              });
+            }),
         floatingActionButton: FloatingActionButton(
             child: const Icon(Icons.add),
             onPressed: () {
@@ -194,23 +190,25 @@ class _ToDoListState extends State<ToDoList> {
             }));
   }
 }
-Color colorSelect(String colorChange){
-    if (colorChange == "pink"){
-      return Colors.pink;
-    }else if(colorChange == "red"){
-      return Colors.red;
-    }else if(colorChange == "purple"){
-      return Colors.purple;
-    }else if(colorChange == "green"){
-      return Colors.green;
-    }else if(colorChange == "blue"){
-      return Colors.blue;
-    }
-    return Colors.orange;
+
+Color colorSelect(String colorChange) {
+  if (colorChange == "pink") {
+    return Colors.pink;
+  } else if (colorChange == "red") {
+    return Colors.red;
+  } else if (colorChange == "purple") {
+    return Colors.purple;
+  } else if (colorChange == "green") {
+    return Colors.green;
+  } else if (colorChange == "blue") {
+    return Colors.blue;
   }
-      String getValue(){
-    return dropdownValue;
-  }
+  return Colors.orange;
+}
+
+String getValue() {
+  return dropdownValue;
+}
 
 void main() {
   runApp(const MaterialApp(
